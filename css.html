@@ -22,13 +22,16 @@
       }
 
   function drawPieChart(chartData, nameData) {
+  const labels = Object.values(nameData).map(item => item.nama);
+  const dataValues = Object.values(chartData.chart);
+  
   new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: [nameData['10025'], 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: labels,
       datasets: [{
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: dataValues,
         borderWidth: 1
       }]
     },
@@ -40,5 +43,5 @@
       }
     }
   });
-  }
+}
 </script>
