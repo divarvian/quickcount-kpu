@@ -17,7 +17,7 @@
     <h6>HASIL HITUNG SUARA PEMILU PRESIDEN & WAKIL PRESIDEN RI 2024</h6>
     <canvas id="pieChart" width="400" height="400"></canvas>
     <div id="legend"></div>
-    <div class="badge bg-secondary text-wrap" style="width: 6rem;">This text should wrap.</div>
+    <div id="description" class="badge bg-secondary text-wrap" style="width: 6rem;">This text should wrap.</div>
     <script>
       async function fetchDataAndDrawChart() {
         try {
@@ -42,6 +42,8 @@
         const radius = Math.min(canvas.width, canvas.height) / 2;
         let startAngle = 0;
         let legendHtml = '';
+
+        document.getElementById("description").innerHTML = "Teks baru";
         // Filter out the 'persen' key
         const filteredChartData = Object.entries(chartData).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
           ...obj,
