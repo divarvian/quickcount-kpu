@@ -27,13 +27,13 @@
           //const responseNames = await fetch('https://divarvian.github.io/quickcount-kpu/dataCandidate.json');
           const data = await response.json();
           const dataNames = await responseNames.json();
-          drawPieChart(data.chart, dataNames);
+          drawPieChart(data.chart, data.ts, dataNames);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       }
 
-      function drawPieChart(chartData, nameData) {
+      function drawPieChart(chartData, lastUpdate, nameData) {
         const canvas = document.getElementById('pieChart');
         const ctx = canvas.getContext('2d');
         const totalVote = Object.values(chartData).reduce((acc, val) => acc + val, 0);
@@ -43,7 +43,9 @@
         let startAngle = 0;
         let legendHtml = '';
 
-        document.getElementById("description").innerHTML = "Teks baru";
+        const description = "Versi: " + lastUpdate;
+        document.getElementById("description").innerHTML = description;
+        
         // Filter out the 'persen' key
         const filteredChartData = Object.entries(chartData).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
           ...obj,
