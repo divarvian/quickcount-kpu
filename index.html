@@ -50,7 +50,6 @@
           const color = getColorForKey(key);
           // Draw pie slice
           ctx.beginPath();
-          ctx.imageSmoothingEnabled = true;
           ctx.moveTo(centerX, centerY);
           ctx.arc(centerX, centerY, radius, startAngle, endAngle);
           ctx.fillStyle = nameData[key].warna;
