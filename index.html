@@ -52,7 +52,7 @@
           ctx.beginPath();
           ctx.moveTo(centerX, centerY);
           ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-          ctx.fillStyle = color;
+          ctx.fillStyle = nameData[key].warna;
           ctx.fill();
           // Draw percentage inside the pie slice
           const textX = centerX + (radius / 2) * Math.cos(midAngle);
