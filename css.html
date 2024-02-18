@@ -23,6 +23,7 @@
   function drawPieChart(chartData, nameData) {
   const labels = Object.values(nameData).map(item => item.nama);
   const dataValues = Object.values(chartData.chart);
+  const colors = Object.values(nameData).map(item => item.warna);
   const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
@@ -32,7 +33,7 @@
       datasets: [{
         label: '# of Votes',
         data: dataValues,
-        borderWidth: 1
+        backgroundColor: colors
       }]
     },
     options: {
