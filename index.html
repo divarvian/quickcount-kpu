@@ -63,7 +63,9 @@
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.font = 'bold 14px Google Sans'; // Adjust font size and style as needed
-          const textPercentage = `${votePercentage.toFixed(2)}%`;
+          const textVote = filteredChartData[key];
+          const textPercentage = ` (${votePercentage.toFixed(2)}%)`;
+          const textVoteTotal = textVote + textPercentage;
           ctx.fillText(textPercentage, textX, textY);
           const textName = nameData[key].nama;
           const textParts = textName.split("-");
