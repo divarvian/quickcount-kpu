@@ -32,7 +32,6 @@
       function drawPieChart(chartData, nameData) {
         const canvas = document.getElementById('pieChart');
         const ctx = canvas.getContext('2d');
-        ctx.imageSmoothingEnabled = true;
         const totalVote = Object.values(chartData).reduce((acc, val) => acc + val, 0);
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
@@ -51,6 +50,7 @@
           const color = getColorForKey(key);
           // Draw pie slice
           ctx.beginPath();
+          ctx.imageSmoothingEnabled = true;
           ctx.moveTo(centerX, centerY);
           ctx.arc(centerX, centerY, radius, startAngle, endAngle);
           ctx.fillStyle = nameData[key].warna;
