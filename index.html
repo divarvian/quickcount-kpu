@@ -43,7 +43,7 @@
         let startAngle = 0;
         let legendHtml = '';
 
-        const description = "Versi: " + allData.ts + "<br>Progress: " + chartData['persen'];
+        const description = "Versi: " + allData.ts + "<br>Progress: " + allData.progress + " dari " + allData.total + " (" + chartData['persen'] + ")";
         document.getElementById("description").innerHTML = description;
         
         // Filter out the 'persen' key
