@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mortezaom/google-sans-cdn@master/fonts.css" />
+    <title>HASIL HITUNG SUARA PEMILU PRESIDEN & WAKIL PRESIDEN RI 2024</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: "Google Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <h6>HASIL HITUNG SUARA PEMILU PRESIDEN & WAKIL PRESIDEN RI 2024</h6>
+    <canvas id="pieChart" width="400" height="400"></canvas>
+    <div id="legend"></div>
+    <script>
+      async function fetchDataAndDrawChart() {
+        try {
+          const response = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+          const responseNames = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+          const data = await response.json();
+          const dataNames = await responseNames.json();
+          drawPieChart(data.chart, dataNames);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+
+      function drawPieChart(chartData, nameData) {
+        const canvas = document.getElementById('pieChart');
+        const ctx = canvas.getContext('2d');
+        const totalVote = Object.values(chartData).reduce((acc, val) => acc + val, 0);
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(canvas.width, canvas.height) / 2;
+        let startAngle = 0;
+        let legendHtml = '';
+        // Filter out the 'persen' key
+        const filteredChartData = Object.entries(chartData).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+          ...obj,
+          [key]: val
+        }), {});
+        for (const key in filteredChartData) {
+          const votePercentage = (filteredChartData[key] / totalVote) * 100;
+          const endAngle = startAngle + (votePercentage * Math.PI * 2) / 100;
+          const midAngle = startAngle + (endAngle - startAngle) / 2;
+          const color = getColorForKey(key);
+          // Draw pie slice
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+          ctx.fillStyle = color;
+          ctx.fill();
+          // Draw percentage inside the pie slice
+          const textX = centerX + (radius / 2) * Math.cos(midAngle);
+          const textY = centerY + (radius / 2) * Math.sin(midAngle);
+          ctx.fillStyle = 'white'; // Set text color to white for better visibility
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = 'bold 14px Arial'; // Adjust font size and style as needed
+          const textPercentage = `${votePercentage.toFixed(2)}%`;
+          ctx.fillText(textPercentage, textX, textY);
+          const textName = nameData[key].nama;
+          const textParts = textName.split("-");
+          ctx.font = 'bold 8px Arial'; // Adjust font size and style as needed
+          ctx.fillText(textParts[0], textX + 15, textY + 15);
+          ctx.fillText(textParts[1], textX + 15, textY + 30);
+          startAngle = endAngle;
+        }
+        // Display legend
+        document.getElementById('legend').innerHTML = legendHtml;
+      }
+
+      function getColorForKey(key) {
+        switch (key) {
+          case '100025':
+            return 'orange'; // Orange
+          case '100026':
+            return 'lightblue'; // Blue sky
+          case '100027':
+            return 'red'; // Red
+          default:
+            return 'black'; // Default color
+        }
+      }
+      // Fetch data and draw chart initially
+      fetchDataAndDrawChart();
+    </script>
+  </body>
+</html>
