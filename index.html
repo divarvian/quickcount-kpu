@@ -66,7 +66,7 @@
           const textVote = filteredChartData[key];
           const textPercentage = ` (${votePercentage.toFixed(2)}%)`;
           const textVoteTotal = textVote + textPercentage;
-          ctx.fillText(textPercentage, textX, textY);
+          ctx.fillText(textVoteTotal, textX, textY);
           const textName = nameData[key].nama;
           const textParts = textName.split("-");
           ctx.font = 'bold 8px Google Sans'; // Adjust font size and style as needed
