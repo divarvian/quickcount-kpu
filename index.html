@@ -19,10 +19,10 @@
     <script>
       async function fetchDataAndDrawChart() {
         try {
-          //const response = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
-          //const responseNames = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
-          const response = await fetch('https://divarvian.github.io/quickcount-kpu/dataVoting.json');
-          const responseNames = await fetch('https://divarvian.github.io/quickcount-kpu/dataCandidate.json');
+          const response = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+          const responseNames = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+          //const response = await fetch('https://divarvian.github.io/quickcount-kpu/dataVoting.json');
+          //const responseNames = await fetch('https://divarvian.github.io/quickcount-kpu/dataCandidate.json');
           const data = await response.json();
           const dataNames = await responseNames.json();
           drawPieChart(data.chart, dataNames);
