@@ -35,7 +35,10 @@
       }
 
       function drawPieChart(chartData, nameData) {
-        const labels = Object.values(nameData).map(item => item.nama);
+        const labels = Object.values(nameData).map(item => {
+          const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
+          return nameParts.join("<br>"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
+        });
         const dataValues = Object.values(chartData.chart);
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
