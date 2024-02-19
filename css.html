@@ -12,11 +12,12 @@
         height: 300px;
         /* Sesuaikan dengan tinggi yang diinginkan */
       }
+
       #myChart .chartjs-render-monitor .chartjs-tooltip .label {
-        max-width: 100px; /* Sesuaikan dengan lebar maksimum yang diinginkan */
+        max-width: 100px;
+        /* Sesuaikan dengan lebar maksimum yang diinginkan */
         word-wrap: break-word;
       }
-
     </style>
   </head>
   <body>
@@ -44,14 +45,13 @@
           const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
           return nameParts.join("\n"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
         });
-        const dataV = Object.entries(chartData.chart)
-  .filter(([key, _]) => key !== 'persen')
-  .reduce((obj, [key, val]) => {
-    const totalValue = Object.values(val).reduce((acc, cur) => acc + cur, 0);
-    const percent = (val[key] / totalValue) * 100;
-    obj[key] = `${val} (${percent.toFixed(2)}%)`;
-    return obj;
-  }, {});
+        const dataV = Object.entries(chartData.chart).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => {
+          const totalValue = Object.values(val).reduce((acc, cur) => acc + cur, 0);
+          const percent = (val[key] / totalValue) * 100;
+          const formattedPercent = percent.toFixed(2);
+          const result = `${val[key]} ${formattedPercent}`;
+          return percent;
+        }, {});
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
