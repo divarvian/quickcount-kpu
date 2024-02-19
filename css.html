@@ -66,6 +66,7 @@
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         const description = "Versi: " + chartData.ts + "<br>Progress: " + chartData.progres['progres'].toLocaleString('id-ID') + " dari " + chartData.progres['total'].toLocaleString('id-ID') + " TPS (" + chartValues['persen'] + "%)";
+        document.getElementById("description").innerHTML = description;
         new Chart(ctx, {
           type: 'pie',
           data: {
