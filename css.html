@@ -44,21 +44,14 @@
           const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
           return nameParts.join("\n"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
         });
-        const chartValues = Object.values(chartData.chart);
-        const dataValues = Object.entries(chartValues).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
-          ...obj,
-          [key]: val
-        }), {});
-        const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
-        const dataValuesPercent = {};
-        for (const [key, value] of Object.entries(dataValues)) {
-          const percent = (value / totalValue) * 100;
-          dataValuesPercent[key] = percent.toFixed(2);
-        }
-        const dataV = {};
-        for (const [key, value] of Object.entries(dataValues)) {
-          dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)";
-        }
+        const dataV = Object.entries(chartData.chart)
+  .filter(([key, _]) => key !== 'persen')
+  .reduce((obj, [key, val]) => {
+    const totalValue = Object.values(val).reduce((acc, cur) => acc + cur, 0);
+    const percent = (val[key] / totalValue) * 100;
+    obj[key] = `${val} (${percent.toFixed(2)}%)`;
+    return obj;
+  }, {});
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
