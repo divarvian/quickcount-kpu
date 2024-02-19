@@ -57,7 +57,7 @@
         }
         const dataV = {};
         for (const [key, value] of Object.entries(dataValues)) {
-          dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)",;
+          dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)";
         }
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
