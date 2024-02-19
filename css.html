@@ -62,6 +62,8 @@
         }
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
+
+        /*
         new Chart(ctx, {
           type: 'pie',
           data: {
@@ -85,6 +87,18 @@
             }
           }
         });
+        */
+        new Chart(ctx, {
+  type: 'pie',
+  data: dataValues,
+  options: {
+    plugins: {
+      labels: {
+        render: 'percentage',
+      }
+    }
+  }
+});
       }
       fetchDataAndDrawChart();
     </script>
