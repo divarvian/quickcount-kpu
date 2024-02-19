@@ -44,7 +44,6 @@
       }
 
       function drawPieChart(chartData, nameData) {
-        document.getElementById("description").innerHTML = description;
         const labels = Object.values(nameData).map(item => {
           const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
           return nameParts.join("\n"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
