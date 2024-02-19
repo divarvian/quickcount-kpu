@@ -44,7 +44,11 @@
           const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
           return nameParts.join("\n"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
         });
-        const dataValues = Object.values(chartData.chart);
+        const chartValues = Object.values(chartData.chart);
+        const dataValues = Object.entries(chartValues).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+          ...obj,
+          [key]: val
+        }), {});
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
