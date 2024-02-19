@@ -55,6 +55,10 @@
           const percent = (value / totalValue) * 100;
           dataValuesPercent[key] = percent.toFixed(2);
         }
+        const dataV = {};
+        for (const [key, value] of Object.entries(dataValues)) {
+          dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)",;
+        }
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
@@ -63,7 +67,7 @@
             labels: labels,
             datasets: [{
               label: 'Perolehan Suara',
-              data: dataValues + " (" + dataValuesPercent + "%)",
+              data: dataV,
               backgroundColor: colors
             }]
           },
