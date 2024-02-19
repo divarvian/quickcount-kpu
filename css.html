@@ -63,7 +63,7 @@
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
-          type: 'outlabeledPie',
+          type: 'pie',
           data: {
             labels: labels,
             datasets: [{
