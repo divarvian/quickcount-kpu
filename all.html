@@ -14,38 +14,49 @@
         try {
           const pilpresValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
           const pilpresCandidate = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
-          const dataPilpres = await response.json();
-          const dataCandidate = await responseNames.json();
+          const dataPilpres = await pilpresValue.json();
+          const dataCandidate = await pilpresCandidate.json();
           drawPilpresChart(dataPilpres, dataCandidate);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       }
+
       function drawPilpresChart(dataPilpres, dataCandidate) {
-      // Data untuk diagram pie
-      var pieData = {
-        labels: ['A', 'B', 'C', 'D', 'E'],
-        datasets: [{
-          data: [12, 19, 3, 17, 28],
-          backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange']
-        }]
-      };
-      // Menampilkan diagram pie
-      var pieChart = new Chart(document.getElementById('pieChart'), {
-        type: 'pie',
-        data: pieData,
-        options: {
-          plugins: {
-            legend: {
-              display: false,
-            },
-            title: {
-              display: true,
-              text: 'QUICK COUNT PILPRES RI 2024'
+        const candidateName = Object.values(dataCandidate).map(item => {
+          const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
+          return nameParts.join("\n"); // Menggabungkan kembali dengan tanda ganti baris di antara dua bagian
+        });
+        const chartPilpres = Object.values(dataPilpres.chart);
+        const dataVote = Object.entries(chartPilpres).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+          ...obj,
+          [key]: val
+        }), {});
+        const colors = Object.values(dataCandidate).map(item => item.warna);
+        // Data untuk diagram pie
+        var pieData = {
+          labels: candidateName,
+          datasets: [{
+            data: dataVote,
+            backgroundColor: colors
+          }]
+        };
+        // Menampilkan diagram pie
+        var pieChart = new Chart(document.getElementById('pieChart'), {
+          type: 'pie',
+          data: pieData,
+          options: {
+            plugins: {
+              legend: {
+                display: false,
+              },
+              title: {
+                display: true,
+                text: 'QUICK COUNT PILPRES RI 2024'
+              }
             }
           }
-        }
-      });
+        });
       }
       // Data untuk diagram batang
       var barData = {
