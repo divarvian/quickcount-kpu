@@ -62,8 +62,13 @@
         for (const [key, value] of Object.entries(dataValues)) {
             dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)";
         }
-        const labels = Object.values(nameData).map(item => item.nama);
-        const colors = Object.values(nameData).map(item => item.warna);
+        const labels = Object.values(nameData)
+        .filter(item => !item.is_aceh)
+        .map(item => item.nama);
+        const colors = Object.values(nameData)
+        .filter(item => !item.is_aceh)
+        .map(item => item.warna);
+
         const ctx = document.getElementById('myChart');
         const description = "Versi: " + chartData.ts + "<br>Progress: " + chartData.progres['progres'].toLocaleString('id-ID') + " dari " + chartData.progres['total'].toLocaleString('id-ID') + " TPS (" + chartData.chart['persen'] + "%)";
         const options = {
