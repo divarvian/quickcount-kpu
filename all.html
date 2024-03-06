@@ -15,7 +15,6 @@
   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
 </div>
     <script>
-      let isShowPercentage = true;
       async function fetchDataAndDrawChart() {
         try {
           const pilpresValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
@@ -54,12 +53,14 @@
           [key]: val
         }), {});
         const pilpresPercentage = calculateDataValuesPercent(dataVote);
+        var checkbox = document.getElementById("flexSwitchCheckChecked");
+        const dataVoteFinal = checkbox.checked ? pilpresPercentage : dataVote;
         const colors = Object.values(dataCandidate).map(item => item.warna);
         // Data untuk diagram pie
         var pieData = {
           labels: candidateName,
           datasets: [{
-            data: Object.values(pilpresPercentage),
+            data: Object.values(dataVoteFinal),
             backgroundColor: colors
           }]
         };
@@ -82,65 +83,48 @@
       }
 
       function drawPilegChart(dataPileg, dataPartyCandidate) {
-    const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
-    const chartPileg = Object.values(dataPileg.chart);
-    const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
-        ...obj,
-        [key]: val
-    }), {});
-    const pilegPercentage = calculateDataValuesPercent(dataVote);
-    const dataVoteFinal = isShowPercentage ? pilegPercentage : dataVote; // Updated line
-    const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
-    // Data untuk diagram batang
-    var barData = {
-        labels: candidatePartyName,
-        datasets: [{
-            data: Object.values(dataVoteFinal),
+        const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
+        const chartPileg = Object.values(dataPileg.chart);
+        const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+          ...obj,
+          [key]: val
+        }), {});
+        const pilegPercentage = calculateDataValuesPercent(dataVote);
+        const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
+        // Data untuk diagram batang
+        var barData = {
+          labels: candidatePartyName,
+          datasets: [{
+            data: Object.values(pilegPercentage),
             backgroundColor: colors,
-        }]
-    };
-    // Menampilkan diagram batang
-    var barChart = new Chart(document.getElementById('barChart'), {
-        type: 'bar',
-        data: barData,
-        options: {
+          }]
+        };
+        // Menampilkan diagram batang
+        var barChart = new Chart(document.getElementById('barChart'), {
+          type: 'bar',
+          data: barData,
+          options: {
             scales: {
-                y: {
-                    beginAtZero: true, // Start y-axis at 0
-                    display: true
-                },
-                x: {
-                    display: false // This hides the x-axis labels
-                },
+              y: {
+                beginAtZero: true, // Start y-axis at 0
+                display: true
+              },
+              x: {
+                display: false // This hides the x-axis labels
+              },
             },
             plugins: {
-                title: {
-                    display: true,
-                    text: 'QUICK COUNT DPR RI 2024'
-                },
-                legend: {
-                    display: false
-                }
+              title: {
+                display: true,
+                text: 'QUICK COUNT DPR RI 2024'
+              },
+              legend: {
+                display: false
+              }
             }
-        }
-    });
-}
-
-// Get the checkbox element
-var checkbox = document.getElementById("flexSwitchCheckChecked");
-
-// Add an event listener to detect changes
-checkbox.addEventListener("change", function() {
-  if (checkbox.checked) {
-    isShowPercentage = true;
-    fetchDataAndDrawChart();
-    console.log("Checkbox is checked");
-  } else {
-    isShowPercentage = false;
-    fetchDataAndDrawChart();
-    console.log("Checkbox is not checked");
-  }
-});
+          }
+        });
+      }
       fetchDataAndDrawChart();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
