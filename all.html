@@ -82,49 +82,50 @@
       }
 
       function drawPilegChart(dataPileg, dataPartyCandidate) {
-        const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
-        const chartPileg = Object.values(dataPileg.chart);
-        const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
-          ...obj,
-          [key]: val
-        }), {});
-        const pilegPercentage = calculateDataValuesPercent(dataVote);
-        const dataVoteFinal = isShowPercentage ? pilegPercentage : dataVote;
-        const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
-        // Data untuk diagram batang
-        var barData = {
-          labels: candidatePartyName,
-          datasets: [{
+    const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
+    const chartPileg = Object.values(dataPileg.chart);
+    const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+        ...obj,
+        [key]: val
+    }), {});
+    const pilegPercentage = calculateDataValuesPercent(dataVote);
+    const dataVoteFinal = isShowPercentage ? pilegPercentage : dataVote; // Updated line
+    const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
+    // Data untuk diagram batang
+    var barData = {
+        labels: candidatePartyName,
+        datasets: [{
             data: Object.values(dataVoteFinal),
             backgroundColor: colors,
-          }]
-        };
-        // Menampilkan diagram batang
-        var barChart = new Chart(document.getElementById('barChart'), {
-          type: 'bar',
-          data: barData,
-          options: {
+        }]
+    };
+    // Menampilkan diagram batang
+    var barChart = new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: barData,
+        options: {
             scales: {
-              y: {
-                beginAtZero: true, // Start y-axis at 0
-                display: true
-              },
-              x: {
-                display: false // This hides the x-axis labels
-              },
+                y: {
+                    beginAtZero: true, // Start y-axis at 0
+                    display: true
+                },
+                x: {
+                    display: false // This hides the x-axis labels
+                },
             },
             plugins: {
-              title: {
-                display: true,
-                text: 'QUICK COUNT DPR RI 2024'
-              },
-              legend: {
-                display: false
-              }
+                title: {
+                    display: true,
+                    text: 'QUICK COUNT DPR RI 2024'
+                },
+                legend: {
+                    display: false
+                }
             }
-          }
-        });
-      }
+        }
+    });
+}
+
 // Get the checkbox element
 var checkbox = document.getElementById("flexSwitchCheckChecked");
 
