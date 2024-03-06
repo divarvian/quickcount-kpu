@@ -75,7 +75,11 @@
 }
       
       function drawPilegChart(dataPileg, dataPartyCandidate) {
-        const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
+        const candidatePartyName = Object.values(dataPartyCandidate)
+    .filter(item => !item.is_aceh)
+    .map(item => item.nama)
+    .slice(0, 18); // Slice the array to include only the valid party names
+
         console.log(candidatePartyName);
         const chartPileg = Object.values(dataPileg.chart);
         const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
