@@ -51,9 +51,6 @@
       }
 
       function drawPieChart(chartData, nameData) {
-        const labels = Object.values(nameData).map(item => {
-          return item.nama;
-        });
         const chartValues = Object.values(chartData.chart);
         const dataValues = Object.entries(chartValues).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
           ...obj,
@@ -69,6 +66,7 @@
         for (const [key, value] of Object.entries(dataValues)) {
           dataV[key] = dataValues[key] + " (" + dataValuesPercent[key] + "%)";
         }
+        const colors = Object.values(nameData).map(item => item.nama);
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         const description = "Versi: " + chartData.ts + "<br>Progress: " + chartData.progres['progres'].toLocaleString('id-ID') + " dari " + chartData.progres['total'].toLocaleString('id-ID') + " TPS (" + chartData.chart['persen'] + "%)";
