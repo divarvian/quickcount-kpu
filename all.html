@@ -54,7 +54,7 @@
         }), {});
         const pilpresPercentage = calculateDataValuesPercent(dataVote);
         var checkbox = document.getElementById("flexSwitchCheckChecked");
-        const dataVoteFinal = checkbox.checked ? pilpresPercentage : dataVote;
+        const dataVoteFinal = checkbox.checked ? dataVote : pilpresPercentage;
         const colors = Object.values(dataCandidate).map(item => item.warna);
         // Data untuk diagram pie
         var pieData = {
