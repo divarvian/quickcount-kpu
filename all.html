@@ -88,12 +88,13 @@
           [key]: val
         }), {});
         const pilegPercentage = calculateDataValuesPercent(dataVote);
+        const dataVoteFinal = isShowPercentage ? pilegPercentage : dataVote;
         const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
         // Data untuk diagram batang
         var barData = {
           labels: candidatePartyName,
           datasets: [{
-            data: Object.values(pilegPercentage),
+            data: Object.values(dataVoteFinal),
             backgroundColor: colors,
           }]
         };
@@ -124,15 +125,22 @@
         });
       }
 
-      // Get the checkbox element
+let isShowPercentage = true;
+// Get the checkbox element
 var checkbox = document.getElementById("flexSwitchCheckChecked");
 
-// Check if the checkbox is checked
-if (checkbox.checked) {
-  console.log("Checkbox is checked");
-} else {
-  console.log("Checkbox is not checked");
-}
+// Add an event listener to detect changes
+checkbox.addEventListener("change", function() {
+  if (checkbox.checked) {
+    isShowPercentage = true;
+    console.log("Checkbox is checked");
+  } else {
+    isShowPercentage = false;
+    console.log("Checkbox is not checked");
+  }
+});
+
+
 
       fetchDataAndDrawChart();
     </script>
