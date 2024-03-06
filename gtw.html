@@ -15,6 +15,7 @@
     <label class="form-check-label" for="showAsPercentage">Show data as Percentage?</label>
   </div>
   <script>
+    let bIsPercentage = true;
     async function fetchDataAndDrawChart() {
       try {
         const [pilpresValue, pilpresCandidate, pilegValue, pilegPartyCandidate] = await Promise.all([
@@ -23,8 +24,8 @@
           fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpr.json').then(res => res.json()),
           fetch('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json').then(res => res.json())
         ]);
-        drawChart(pilpresValue, pilpresCandidate, 'pieChart');
-        drawChart(pilegValue, pilegPartyCandidate, 'barChart');
+        drawChart(pilpresValue, pilpresCandidate, 'pieChart', bIsPercentage);
+        drawChart(pilegValue, pilegPartyCandidate, 'barChart', bIsPercentage);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,7 +38,7 @@
       );
     }
 
-    function drawChart(chartData, candidateData, chartId) {
+    function drawChart(chartData, candidateData, chartId, isPercentage) {
       const candidateNames = Object.values(candidateData).map(item => item.nama.replace('-', '\n'));
       const chart = Object.values(chartData.chart);
       const dataVote = Object.fromEntries(
@@ -48,7 +49,7 @@
       const data = {
         labels: candidateNames,
         datasets: [{
-          data: chartId === 'pieChart' ? Object.values(dataPercentage) : Object.values(dataVote),
+          data: isPercentage ? Object.values(dataPercentage) : Object.values(dataVote),
           backgroundColor: colors,
         }]
       };
@@ -66,12 +67,17 @@
     }
 
     const showAsPercentageCheckbox = document.getElementById("showAsPercentage");
-    const pieChart = document.getElementById("pieChart");
-    const barChart = document.getElementById("barChart");
+    //const pieChart = document.getElementById("pieChart");
+    //const barChart = document.getElementById("barChart");
     showAsPercentageCheckbox.addEventListener("change", function() {
       const checked = showAsPercentageCheckbox.checked;
-      pieChart.style.display = checked ? "block" : "none";
-      barChart.style.display = checked ? "none" : "block";
+      if (checked) {
+        bIsPercentage = true;
+      } else {
+        bIsPercentage = false;
+      }
+      //pieChart.style.display = checked ? "block" : "none";
+      //barChart.style.display = checked ? "none" : "block";
     });
 
     fetchDataAndDrawChart();
