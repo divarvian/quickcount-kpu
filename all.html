@@ -123,6 +123,20 @@
           }
         });
       }
+      // Get the checkbox element
+var checkbox = document.getElementById("flexSwitchCheckChecked");
+var pieChart = document.getElementById("pieChart");
+var barChart = document.getElementById("barChart");
+// Add an event listener to detect changes
+checkbox.addEventListener("change", function() {
+  if (checkbox.checked) {
+    pieChart.style.display = "block";
+    console.log("Checkbox is checked");
+  } else {
+    pieChart.style.display = "none";
+    console.log("Checkbox is not checked");
+  }
+});
       fetchDataAndDrawChart();
       setInterval(fetchDataAndDrawChart, 5000);
     </script>
