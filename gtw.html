@@ -18,31 +18,31 @@
   </div>
   <script>
     async function fetchDataAndDrawChart() {
-        try {
-          const pilpresValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
-          const pilpresCandidate = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
-          const dataPilpres = await pilpresValue.json();
-          const dataCandidate = await pilpresCandidate.json();
-          const pilegValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpr.json');
-          const pilegPartyCandidate = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
-          const dataPileg = await pilegValue.json();
-          const dataPartyCandidate = await pilegPartyCandidate.json();
-          drawPilpresChart(dataPilpres, dataCandidate);
-          drawPilegChart(dataPileg, dataPartyCandidate);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
+      try {
+        const pilpresValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
+        const pilpresCandidate = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json');
+        const dataPilpres = await pilpresValue.json();
+        const dataCandidate = await pilpresCandidate.json();
+        const pilegValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpr.json');
+        const pilegPartyCandidate = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json');
+        const dataPileg = await pilegValue.json();
+        const dataPartyCandidate = await pilegPartyCandidate.json();
+        drawPilpresChart(dataPilpres, dataCandidate, true);
+        drawPilegChart(dataPileg, dataPartyCandidate, true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
+    }
 
-      function calculateDataValuesPercent(dataValues) {
-        const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
-        const dataValuesPercent = {};
-        for (const [key, value] of Object.entries(dataValues)) {
-          const percent = (value / totalValue) * 100;
-          dataValuesPercent[key] = percent.toFixed(2);
-        }
-        return dataValuesPercent;
+    function calculateDataValuesPercent(dataValues) {
+      const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
+      const dataValuesPercent = {};
+      for (const [key, value] of Object.entries(dataValues)) {
+        const percent = (value / totalValue) * 100;
+        dataValuesPercent[key] = percent.toFixed(2);
       }
+      return dataValuesPercent;
+    }
 
     function drawChart(canvasId, dataLabels, dataValues, chartTitle, isPercentage) {
       const colors = Object.values(dataCandidate).map(item => item.warna);
