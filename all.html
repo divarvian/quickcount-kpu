@@ -66,14 +66,24 @@
         });
       }
       function drawPilegChart(dataPileg, dataPartyCandidate) {
+      const candidatePartyName = Object.values(dataPartyCandidate)
+        .filter(item => !item.is_aceh)
+        .map(item => item.nama);
+        const chartPileg = Object.values(dataPileg.chart);
+        const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
+          ...obj,
+          [key]: val
+        }), {});
+        const colors = Object.values(dataPartyCandidate)
+        .filter(item => !item.is_aceh)
+        .map(item => item.warna);
       // Data untuk diagram batang
       var barData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: candidatePartyName,
         datasets: [{
           label: 'Sales',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink'],
-          borderColor: ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink'],
+          data: dataVote,
+          backgroundColor: colors,
           borderWidth: 1
         }]
       };
