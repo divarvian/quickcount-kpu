@@ -39,7 +39,7 @@
     }
 
     function drawChart(chartData, candidateData, chartId, isPercentage) {
-      const candidateNames = Object.values(candidateData).map(item => item.nama.replace('-', '\n'));
+      const candidateNames = Object.values(candidateData).filter(item => !item.is_aceh).map(item => item.nama.replace('-', '\n'));
       const chart = Object.values(chartData.chart);
       const dataVote = Object.fromEntries(
         Object.entries(chart).filter(([key, _]) => key !== 'persen')
