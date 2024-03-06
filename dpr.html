@@ -46,6 +46,16 @@
         }
     }
 
+    function calculateDataValuesPercent(dataValues) {
+    const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
+    const dataValuesPercent = {};
+    for (const [key, value] of Object.entries(dataValues)) {
+        const percent = (value / totalValue) * 100;
+        dataValuesPercent[key] = percent.toFixed(2);
+    }
+    return dataValuesPercent;
+}
+    
     function drawPieChart(chartData, nameData) {
         const chartValues = Object.values(chartData.chart);
         const dataValues = Object.entries(chartValues).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
@@ -53,6 +63,7 @@
             [key]: val
         }), {});
         const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
+        const testPercentage = calculateDataValuesPercent(dataValues);
         const dataValuesPercent = {};
         for (const [key, value] of Object.entries(dataValues)) {
             const percent = (value / totalValue) * 100;
@@ -97,7 +108,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    data: Object.values(dataValues),
+                    data: Object.values(testPercentage),
                     backgroundColor: colors
                 }]
             },
