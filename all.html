@@ -15,6 +15,7 @@
   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
 </div>
     <script>
+      let isShowPercentage = true;
       async function fetchDataAndDrawChart() {
         try {
           const pilpresValue = await fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json');
@@ -124,7 +125,6 @@
           }
         });
       }
-let isShowPercentage = true;
 // Get the checkbox element
 var checkbox = document.getElementById("flexSwitchCheckChecked");
 
