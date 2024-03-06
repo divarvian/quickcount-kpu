@@ -62,7 +62,7 @@
           x: { display: false }
         }
       };
-      new Chart(document.getElementById(chartId), { type: 'pie', data, options });
+      new Chart(document.getElementById(chartId), { type: chartId === 'pieChart' ? 'pie' : 'bar', data, options });
     }
 
     const showAsPercentageCheckbox = document.getElementById("showAsPercentage");
