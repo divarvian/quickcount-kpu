@@ -12,7 +12,7 @@
     <canvas id="pieChartVote" width="400" height="400"></canvas>
     <canvas id="barChart" width="400" height="400"></canvas>
     <div class="form-check form-switch">
-  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
   <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
 </div>
     <script>
@@ -152,6 +152,7 @@ var pieChartPercentage = document.getElementById("pieChartPercentage");
 var pieChartVote = document.getElementById("pieChartVote");
 var barChart = document.getElementById("barChart");
 // Add an event listener to detect changes
+pieChartVote.style.display = "none";
 checkbox.addEventListener("change", function() {
   if (checkbox.checked) {
     pieChartPercentage.style.display = "block";
