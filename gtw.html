@@ -43,14 +43,14 @@
       }
 
       function drawChart(data, dataCandidate, chartId) {
-        const candidateName = Object.values(dataCandidate).map(item => item.nama.split("-").join("\n"));
+        const candidateName = Object.values(dataCandidate).filter(item => !item.is_aceh).map(item => item.nama.split("-").join("\n"));
         const chartData = Object.values(data.chart);
         const dataVote = Object.entries(chartData).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
           ...obj,
           [key]: val
         }), {});
         const dataPercentage = calculateDataValuesPercent(dataVote);
-        const colors = Object.values(dataCandidate).map(item => item.warna);
+        const colors = Object.values(dataCandidate).filter(item => !item.is_aceh).map(item => item.warna);
 
         const chartDataConfig = {
           labels: candidateName,
