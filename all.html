@@ -76,6 +76,7 @@
       
       function drawPilegChart(dataPileg, dataPartyCandidate) {
         const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
+        console.log(candidatePartyName);
         const chartPileg = Object.values(dataPileg.chart);
         const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
           ...obj,
@@ -89,7 +90,6 @@
           datasets: [{
             data: pilegPercentage,
             backgroundColor: colors,
-            borderWidth: 1
           }]
         };
         // Menampilkan diagram batang
