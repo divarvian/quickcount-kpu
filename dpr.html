@@ -73,6 +73,13 @@
         const colors = Object.values(nameData).map(item => item.warna);
         const ctx = document.getElementById('myChart');
         const description = "Versi: " + chartData.ts + "<br>Progress: " + chartData.progres['progres'].toLocaleString('id-ID') + " dari " + chartData.progres['total'].toLocaleString('id-ID') + " TPS (" + chartData.chart['persen'] + "%)";
+        const options = {
+      scales: {
+        y: {
+          beginAtZero: true // Start y-axis at 0
+        }
+      }
+    };
         document.getElementById("description").innerHTML = description;
         new Chart(ctx, {
           type: 'bar',
@@ -84,18 +91,7 @@
               backgroundColor: colors
             }]
           },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                display: false,
-              },
-              title: {
-                display: true,
-                text: 'QUICK COUNT DPR RI 2024'
-              }
-            }
-          }
+          options: options
         });
       }
       fetchDataAndDrawChart();
