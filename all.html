@@ -10,10 +10,11 @@
   <body>
     <canvas id="pieChartPercentage" width="400" height="400"></canvas>
     <canvas id="pieChartVote" width="400" height="400"></canvas>
-    <canvas id="barChart" width="400" height="400"></canvas>
+    <canvas id="barChartPercentage" width="400" height="400"></canvas>
+    <canvas id="barChartVote" width="400" height="400"></canvas>
     <div class="form-check form-switch">
   <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-  <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+  <label class="form-check-label" for="flexSwitchCheckChecked">Show data as Percentage?</label>
 </div>
     <script>
       async function fetchDataAndDrawChart() {
@@ -113,17 +114,48 @@
         const pilegPercentage = calculateDataValuesPercent(dataVote);
         const colors = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.warna);
         // Data untuk diagram batang
-        var barData = {
+        var barDataPercentage = {
           labels: candidatePartyName,
           datasets: [{
             data: Object.values(pilegPercentage),
             backgroundColor: colors,
           }]
         };
+        var barDataVote = {
+          labels: candidatePartyName,
+          datasets: [{
+            data: Object.values(dataVote),
+            backgroundColor: colors,
+          }]
+        };
         // Menampilkan diagram batang
-        var barChart = new Chart(document.getElementById('barChart'), {
+        var barChartPercentage = new Chart(document.getElementById('barChartPercentage'), {
           type: 'bar',
-          data: barData,
+          data: barDataPercentage,
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true, // Start y-axis at 0
+                display: true
+              },
+              x: {
+                display: false // This hides the x-axis labels
+              },
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: 'QUICK COUNT DPR RI 2024'
+              },
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+        var barChartVote = new Chart(document.getElementById('barChartVote'), {
+          type: 'bar',
+          data: barDataVote,
           options: {
             scales: {
               y: {
@@ -150,17 +182,22 @@
 var checkbox = document.getElementById("flexSwitchCheckChecked");
 var pieChartPercentage = document.getElementById("pieChartPercentage");
 var pieChartVote = document.getElementById("pieChartVote");
-var barChart = document.getElementById("barChart");
+var barChartPercentage = document.getElementById("barChartPercentage");
+var barChartVote = document.getElementById("barChartVote");
 // Add an event listener to detect changes
 pieChartVote.style.display = "none";
 checkbox.addEventListener("change", function() {
   if (checkbox.checked) {
     pieChartPercentage.style.display = "block";
     pieChartVote.style.display = "none";
+    barChartPercentage.style.display = "block";
+    barChartVote.style.display = "none";
     console.log("Checkbox is checked");
   } else {
     pieChartPercentage.style.display = "none";
     pieChartVote.style.display = "block";
+    barChartPercentage.style.display = "none";
+    barChartVote.style.display = "block";
     console.log("Checkbox is not checked");
   }
 });
