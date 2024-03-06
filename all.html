@@ -26,7 +26,17 @@
           console.error('Error fetching data:', error);
         }
       }
-      
+
+      function calculateDataValuesPercent(dataValues) {
+        const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
+        const dataValuesPercent = {};
+        for (const [key, value] of Object.entries(dataValues)) {
+          const percent = (value / totalValue) * 100;
+          dataValuesPercent[key] = percent.toFixed(2);
+        }
+        return dataValuesPercent;
+      }
+
       function drawPilpresChart(dataPilpres, dataCandidate) {
         const candidateName = Object.values(dataCandidate).map(item => {
           const nameParts = item.nama.split("-"); // Memisahkan label menjadi dua bagian
@@ -64,22 +74,8 @@
         });
       }
 
-      function calculateDataValuesPercent(dataValues) {
-    const totalValue = Object.values(dataValues).reduce((acc, cur) => acc + cur, 0);
-    const dataValuesPercent = {};
-    for (const [key, value] of Object.entries(dataValues)) {
-        const percent = (value / totalValue) * 100;
-        dataValuesPercent[key] = percent.toFixed(2);
-    }
-    return dataValuesPercent;
-}
-      
       function drawPilegChart(dataPileg, dataPartyCandidate) {
-        const candidatePartyName = Object.values(dataPartyCandidate)
-    .filter(item => !item.is_aceh)
-    .map(item => item.nama)
-    .slice(0, 18); // Slice the array to include only the valid party names
-
+        const candidatePartyName = Object.values(dataPartyCandidate).filter(item => !item.is_aceh).map(item => item.nama);
         console.log(candidatePartyName);
         const chartPileg = Object.values(dataPileg.chart);
         const dataVote = Object.entries(chartPileg).filter(([key, _]) => key !== 'persen').reduce((obj, [key, val]) => ({
@@ -92,7 +88,7 @@
         var barData = {
           labels: candidatePartyName,
           datasets: [{
-            data: pilegPercentage,
+            data: Object.values(pilegPercentage),
             backgroundColor: colors,
           }]
         };
