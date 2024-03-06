@@ -47,12 +47,13 @@
           ...obj,
           [key]: val
         }), {});
+        const pilpresPercentage = calculateDataValuesPercent(dataVote);
         const colors = Object.values(dataCandidate).map(item => item.warna);
         // Data untuk diagram pie
         var pieData = {
           labels: candidateName,
           datasets: [{
-            data: dataVote,
+            data: Object.values(pilpresPercentage),
             backgroundColor: colors
           }]
         };
