@@ -58,7 +58,7 @@
           title: { display: true, text: chartId === 'pieChart' ? 'QUICK COUNT PILPRES RI 2024' : 'QUICK COUNT DPR RI 2024' }
         },
         scales: {
-          y: { beginAtZero: true, display: true },
+          y: { beginAtZero: true, display: chartId === 'pieChart' ? false : true },
           x: { display: false }
         }
       };
