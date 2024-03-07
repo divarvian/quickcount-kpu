@@ -18,10 +18,10 @@
       let bIsPercentage = true;
       async function fetchDataAndDrawChart() {
         try {
-          const pilpresValuePromise = fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/ppwp.json').then(res => res.json());
-          const pilpresCandidatePromise = fetch('https://sirekap-obj-data.kpu.go.id/pemilu/ppwp.json').then(res => res.json());
-          const pilegValuePromise = fetch('https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpr.json').then(res => res.json());
-          const pilegPartyCandidatePromise = fetch('https://sirekap-obj-data.kpu.go.id/pemilu/partai.json').then(res => res.json());
+          const pilpresValuePromise = fetch('https://divarvian.github.io/quickcount-kpu/dataVoting.json').then(res => res.json());
+          const pilpresCandidatePromise = fetch('https://divarvian.github.io/quickcount-kpu/dataCandidate.json').then(res => res.json());
+          const pilegValuePromise = fetch('https://divarvian.github.io/quickcount-kpu/dataVotingParty.json').then(res => res.json());
+          const pilegPartyCandidatePromise = fetch('https://divarvian.github.io/quickcount-kpu/dataCandidateParty.json').then(res => res.json());
           const [pilpresValue, pilpresCandidate, pilegValue, pilegPartyCandidate] = await Promise.all([
             pilpresValuePromise.catch(error => {
               console.error('Error fetching pilpresValue:', error);
