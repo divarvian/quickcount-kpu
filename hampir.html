@@ -57,7 +57,7 @@
         const chart = Object.values(chartData.chart);
         const dataVote = Object.fromEntries(Object.entries(chart).filter(([key, _]) => key !== 'persen'));
         const dataPercentage = calculateDataValuesPercent(dataVote);
-        const colors = Object.values(candidateData).map(item => item.warna);
+        const colors = Object.values(candidateData).filter(item => !item.is_aceh).map(item => item.warna);
         const data = {
           labels: candidateNames,
           datasets: [{
